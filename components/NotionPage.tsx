@@ -34,6 +34,7 @@ import { NotionPageHeader } from './NotionPageHeader'
 import { Page404 } from './Page404'
 import { PageAside } from './PageAside'
 import { PageHead } from './PageHead'
+import { SiteHero } from './SiteHero'
 import styles from './styles.module.css'
 
 // -----------------------------------------------------------------------------
@@ -286,6 +287,8 @@ export function NotionPage({
     getPageProperty<string>('Description', block, recordMap) ||
     config.description
 
+  const isRootPage = pageId === site.rootNotionPageId
+
   return (
     <>
       <PageHead
@@ -301,10 +304,12 @@ export function NotionPage({
       {isLiteMode && <BodyClassName className='notion-lite' />}
       {isDarkMode && <BodyClassName className='dark-mode' />}
 
+      {isRootPage && !isLiteMode && <SiteHero />}
+
       <NotionRenderer
         bodyClassName={cs(
           styles.notion,
-          pageId === site.rootNotionPageId && 'index-page'
+          isRootPage && 'index-page has-site-hero'
         )}
         darkMode={isDarkMode}
         components={notionRendererComponents}
@@ -323,7 +328,7 @@ export function NotionPage({
         mapImageUrl={mapImageUrl}
         searchNotion={config.isSearchEnabled ? searchNotion : undefined}
         pageAside={pageAside}
-        footer={<Footer />}
+        footer={isRootPage ? undefined : <Footer />}
       />
 
       <GitHubShareButton />

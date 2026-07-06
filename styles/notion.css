@@ -47,6 +47,7 @@
   max-width: 1100px;
   margin: 0 auto;
   overflow-x: auto;
+  justify-content: flex-end;
 }
 
 .notion-nav-header-rhs {

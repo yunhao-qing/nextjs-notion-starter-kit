@@ -1,4 +1,5 @@
 import type * as types from './types'
+import type { SiteHeroConfig } from './site-hero'
 
 export interface SiteConfig {
   rootNotionPageId: string
@@ -33,6 +34,8 @@ export interface SiteConfig {
 
   navigationStyle?: types.NavigationStyle
   navigationLinks?: Array<NavigationLink>
+
+  hero?: SiteHeroConfig
 }
 
 export interface NavigationLink {

@@ -1,7 +1,8 @@
 import type * as types from 'notion-types'
 import cs from 'classnames'
 import * as React from 'react'
-import { Breadcrumbs, Header, Search, useNotionContext } from 'react-notion-x'
+import { parsePageId } from 'notion-utils'
+import { Breadcrumbs, Search, useNotionContext } from 'react-notion-x'
 
 import { isSearchEnabled, navigationLinks, navigationStyle } from '@/lib/config'
 import { MoonIcon } from '@/lib/icons/moon'
@@ -37,10 +38,28 @@ export function NotionPageHeader({
 }: {
   block: types.CollectionViewPageBlock | types.PageBlock
 }) {
-  const { components, mapPageUrl } = useNotionContext()
+  const { components, mapPageUrl, rootPageId } = useNotionContext()
+
+  const isRootPage =
+    !!rootPageId &&
+    !!block.id &&
+    parsePageId(block.id) === parsePageId(rootPageId)
+
+  if (isRootPage) {
+    return null
+  }
 
   if (navigationStyle === 'default') {
-    return <Header block={block} />
+    return (
+      <header className='notion-header'>
+        <div className='notion-nav-header'>
+          <div className='notion-nav-header-rhs breadcrumbs'>
+            <ToggleThemeButton />
+            {isSearchEnabled && <Search block={block} title={null} />}
+          </div>
+        </div>
+      </header>
+    )
   }
 
   return (

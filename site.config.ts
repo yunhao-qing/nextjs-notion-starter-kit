@@ -51,6 +51,16 @@ export default siteConfig({
   // whether to use the default notion navigation style or a custom one with links to
   // important pages. To use `navigationLinks`, set `navigationStyle` to `custom`.
   navigationStyle: 'default'
+
+  // Homepage hero (name, tagline, avatar, bio). Omit to use the placeholder dummy copy.
+  // hero: {
+  //   name: 'Yunhao Qing',
+  //   tagline: 'Your tagline here',
+  //   avatarUrl: 'https://example.com/photo.jpg',
+  //   bioIntro: "I'm Yunhao, and I ...",
+  //   bioLinks: [{ label: 'something cool', href: 'https://example.com' }],
+  //   bioOutro: '. Based in San Francisco.'
+  // },
   // navigationStyle: 'custom',
   // navigationLinks: [
   //   {

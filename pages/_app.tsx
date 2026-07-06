@@ -12,6 +12,7 @@ import 'styles/global.css'
 import 'styles/notion.css'
 // global style overrides for prism theme (optional)
 import 'styles/prism-theme.css'
+import 'styles/site.css'
 
 import type { AppProps } from 'next/app'
 import * as Fathom from 'fathom-client'
@@ -27,6 +28,7 @@ import {
   posthogConfig,
   posthogId
 } from '@/lib/config'
+import { departureMono, newsreader } from '@/lib/fonts'
 
 if (!isServer) {
   bootstrap()
@@ -61,5 +63,9 @@ export default function App({ Component, pageProps }: AppProps) {
     }
   }, [router.events])
 
-  return <Component {...pageProps} />
+  return (
+    <div className={`${newsreader.variable} ${departureMono.variable}`}>
+      <Component {...pageProps} />
+    </div>
+  )
 }

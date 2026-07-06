@@ -1,0 +1,35 @@
+:root {
+  --hero-text: #1a1a1a;
+  --hero-muted: #666;
+  --hero-border: rgba(0, 0, 0, 0.08);
+  --hero-border-hover: rgba(0, 0, 0, 0.15);
+  --hero-surface: rgba(0, 0, 0, 0.03);
+}
+
+.dark-mode {
+  --hero-text: #e8e8e8;
+  --hero-muted: #888;
+  --hero-border: rgba(255, 255, 255, 0.1);
+  --hero-border-hover: rgba(255, 255, 255, 0.2);
+  --hero-surface: rgba(255, 255, 255, 0.04);
+}
+
+body {
+  font-family:
+    var(--font-serif), 'New York', 'Iowan Old Style', 'Charter', Georgia, serif;
+}
+
+.site-mono {
+  font-family: var(--font-mono), ui-monospace, monospace;
+}
+
+.index-page.has-site-hero .notion-page-cover-wrapper,
+.index-page.has-site-hero .notion-title,
+.index-page.has-site-hero .notion-page-icon-hero,
+.index-page.has-site-hero .notion-header {
+  display: none !important;
+}
+
+.index-page.has-site-hero.notion-page {
+  padding-top: 0 !important;
+}
