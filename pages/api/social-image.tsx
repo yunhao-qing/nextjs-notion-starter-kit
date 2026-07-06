@@ -1,4 +1,3 @@
-import ky from 'ky'
 import { type NextApiRequest, type NextApiResponse } from 'next'
 import { ImageResponse } from 'next/og'
 import { type PageBlock } from 'notion-types'
@@ -12,12 +11,30 @@ import {
 } from 'notion-utils'
 
 import * as libConfig from '@/lib/config'
-import interSemiBoldFont from '@/lib/fonts/inter-semibold'
 import { mapImageUrl } from '@/lib/map-image-url'
 import { notion } from '@/lib/notion-api'
 import { type NotionPageInfo, type PageError } from '@/lib/types'
 
 export const runtime = 'edge'
+
+const interFontUrl =
+  'https://fonts.gstatic.com/s/inter/v20/UcCO3FwrK3iLTeHuS_nVMrMxCp50SjIw2boKoduKmMEVuFuYMZg.ttf'
+
+let interFontPromise: Promise<ArrayBuffer> | undefined
+
+async function loadInterFont(): Promise<ArrayBuffer> {
+  if (!interFontPromise) {
+    interFontPromise = fetch(interFontUrl).then((res) => {
+      if (!res.ok) {
+        throw new Error('Failed to load Inter font')
+      }
+
+      return res.arrayBuffer()
+    })
+  }
+
+  return interFontPromise
+}
 
 export default async function OGImage(
   req: NextApiRequest,
@@ -39,6 +56,8 @@ export default async function OGImage(
   }
   const pageInfo = pageInfoOrError.data
   console.log(pageInfo)
+
+  const interSemiBoldFont = await loadInterFont()
 
   return new ImageResponse(
     <div
@@ -277,8 +296,8 @@ async function isUrlReachable(
   }
 
   try {
-    await ky.head(url)
-    return true
+    const res = await fetch(url, { method: 'HEAD' })
+    return res.ok
   } catch {
     return false
   }
@@ -295,7 +314,7 @@ async function getCompatibleImageUrl(
 
     if (imageUrl.host === 'images.unsplash.com') {
       if (!imageUrl.searchParams.has('w')) {
-        imageUrl.searchParams.set('w', '1200')
+        imageUrl.searchParams.set('w', '800')
         imageUrl.searchParams.set('fit', 'max')
         return imageUrl.toString()
       }
